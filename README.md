@@ -1,3 +1,3 @@
 # Cosmetics patch
 
-CelePatch ver of 
+CelePatch ver of lcqt cosmetics unlocker
