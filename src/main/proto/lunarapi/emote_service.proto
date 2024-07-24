@@ -5,7 +5,11 @@ message LoginResponse {
   repeated int32 owned_emote_ids = 1;
   repeated int32 equipped_emote_ids = 2;
 
+  repeated AvailableEmote available_emote = 7;
+}
 
+message AvailableEmote {
+  int32 id = 1;
 }
 
 message UpdateEquippedEmotes {

@@ -8,11 +8,11 @@ message LoginResponse {
   repeated util.Color available_plus_colors = 3;
   util.Color logo_color = 4;
 
-  repeated AvailableCosmetics available_cosmetics = 7; // ui
+  repeated AvailableCosmetic available_cosmetic = 7; // ui
 }
 
 
-message AvailableCosmetics {
+message AvailableCosmetic {
   int32 id = 1;
 }
 

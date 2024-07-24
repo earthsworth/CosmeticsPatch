@@ -4,7 +4,7 @@ import io.github.nilsen84.lcqt.LcqtPatcher
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import lunarapi.cosmetic.CosmeticService
-import lunarapi.cosmetic.CosmeticService.AvailableCosmetics
+import lunarapi.cosmetic.CosmeticService.AvailableCosmetic
 import lunarapi.cosmetic.CosmeticService.UpdateCosmeticSettings
 import lunarapi.emote.EmoteService
 import lunarapi.emote.EmoteService.UpdateEquippedEmotes
@@ -69,7 +69,8 @@ object Proxy {
                 packet.clearOwnedCosmeticIds()
                 packet.addAllOwnedCosmeticIds(cosmeticsIndex.map { it.id })
                 // for latest LC
-                packet.addAllAvailableCosmetics(cosmeticsIndex.map { AvailableCosmetics.newBuilder().setId(it.id).build() })
+                packet.clearAvailableCosmetic()
+                packet.addAllAvailableCosmetic(cosmeticsIndex.map { AvailableCosmetic.newBuilder().setId(it.id).build() })
 
                 packet.setLogoColor(Color.newBuilder().setColor(0xFF55FF))
 
@@ -92,6 +93,9 @@ object Proxy {
                 return EmoteService.LoginResponse.parseFrom(contents).toBuilder().apply {
                     clearOwnedEmoteIds()
                     addAllOwnedEmoteIds(emotesIndex.map { it.id })
+                    // latest lc
+                    clearAvailableEmote()
+                    addAllAvailableEmote(emotesIndex.map { EmoteService.AvailableEmote.newBuilder().setId(it.id).build() })
 
                     clearEquippedEmoteIds()
                     addAllEquippedEmoteIds(config.equippedEmotes)
