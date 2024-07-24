@@ -10,7 +10,9 @@ object LcqtPatcher {
     val JSON = Json { ignoreUnknownKeys = true; prettyPrint = true }
 
     @get:JvmName("configDir")
-    val configDir = getConfigDir()
+    val configDir = getConfigDir().also {
+        if (!it.exists()) it.mkdirs()
+    }
 
     private fun getConfigDir(): File {
         val os = System.getProperty("os.name").lowercase()
