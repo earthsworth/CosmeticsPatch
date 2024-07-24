@@ -54,8 +54,6 @@ dependencies {
     implementation("org.ow2.asm:asm-tree:9.4")
     implementation("com.github.Nilsen84:kt-bytecode-dsl:v1.1")
     implementation("com.google.protobuf:protobuf-kotlin:3.23.4")
-
-    implementation(files("libs/celepatch.jar"))
 }
 
 kotlin {
