@@ -2,6 +2,7 @@
   "entrypoint": "org.cubewhy.cosmetics.Patch",
   "classpath": [
     "io.github.nilsen84.lcqt",
-    "kotlinx.serialization"
+    "kotlinx.serialization",
+    "lunarapi"
   ]
 }
