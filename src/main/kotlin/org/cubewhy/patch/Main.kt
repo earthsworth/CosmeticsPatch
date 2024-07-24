@@ -36,7 +36,7 @@ internal fun main(args: Array<String>) {
     val config: PatchConfig = JSON.decodeFromString(Main::class.java.getResourceAsStream("/patch.json")!!.readAllBytes().decodeToString())
 
     val entrypoint = Main::class.java.classLoader.loadClass(config.entrypoint).getDeclaredConstructor().newInstance() as PatchEntry
-    inJar.entries().iterator().forEachRemaining { entry ->
+    inJar.entries().toList().sortedByDescending { it.name }.forEach { entry ->
         val out = if (!entry.isDirectory && entry.name.endsWith(".class")) {
             entrypoint.patchClass(entry.name, inJar.getInputStream(entry).readAllBytes())
         } else {

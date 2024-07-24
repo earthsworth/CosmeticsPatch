@@ -16,6 +16,7 @@ class CosmeticsPatch : LunarPatch() {
     override fun transform(cn: ClassNode): Boolean {
         when {
             "com/google/protobuf/RpcChannel" in cn.interfaces -> {
+                println("Hooking protobuf: ${cn.name}")
                 channelClassName = cn.name
 
                 val respMethod = cn.methods.find { it.hasCst("Failed to decode response") }!!
@@ -27,17 +28,21 @@ class CosmeticsPatch : LunarPatch() {
             }
 
             ::channelClassName.isInitialized && cn.name.startsWith("$channelClassName$") -> {
-                val nameField = cn.fields.find { it.desc == "Ljava/lang/String;" }!!
-                cn.generateMethod("lcqt_getMethod", "()Ljava/lang/String;") {
-                    aload(0)
-                    getfield(cn.name, nameField.name, "Ljava/lang/String;")
-                    areturn
-                }
-                return true
+                println("Hook proto: ${cn.name}")
+                genLcqtGetMethod(cn)
             }
         }
 
         return false
+    }
+
+    fun genLcqtGetMethod(cn: ClassNode) {
+        val nameField = cn.fields.find { it.desc == "Ljava/lang/String;" }!!
+        cn.generateMethod("lcqt_getMethod", "()Ljava/lang/String;") {
+            aload(0)
+            getfield(cn.name, nameField.name, "Ljava/lang/String;")
+            areturn
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
